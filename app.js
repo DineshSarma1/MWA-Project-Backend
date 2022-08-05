@@ -4,7 +4,7 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
-//const movieRouter = require('./routers/movieRouter');
+const movieRouter = require('./routers/movieRouter');
 const userRouter = require('./routers/userRouter.js');
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //router
-//app.use('/movie', movieRouter);
+app.use('/movie', movieRouter);
 app.use('/user', userRouter);
 
 /// log all requests to access.log
@@ -27,7 +27,7 @@ app.use(morgan('common', {
 }))
 
 //listening to port
-const PORT_NUMBER = 9090;
+const PORT_NUMBER = 8899;
 app.listen(PORT_NUMBER, function () {
     console.log(`listening to post number ${PORT_NUMBER}`);
 })
