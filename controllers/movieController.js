@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Movie = require('../model/movie.js');
 const jwt = require("jsonwebtoken");
 
-//adding single user
+//adding single movie
 const addMovie = async (req, res, next) => {
 
     const movie = await Movie.create(req.body);
@@ -15,4 +15,16 @@ const addMovie = async (req, res, next) => {
 
 };
 
-module.exports = { addMovie }
+//returns list of movies - no need of token
+const getMovies = async (req, res, next) => {
+    Movie.find((err, docs) => {
+        if (!err) {
+            console.log(docs);
+            res.send(docs);
+        } else {
+            res.send({ 'error': err });
+        }
+    });
+}
+
+module.exports = { addMovie, getMovies }
