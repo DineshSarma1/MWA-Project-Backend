@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 ActorModel = require('./actors.js');
 RatingModel = require('./feedback.js');
 
-const Actor = mongoose.model('Actor');
-const Rating = mongoose.model('Rating');
+// const Actor = mongoose.model('Actor');
+// const Rating = mongoose.model('Rating');
 
 //create schema
 const movieSchema = new mongoose.Schema({
@@ -11,15 +11,15 @@ const movieSchema = new mongoose.Schema({
     release_date: Date,
     length: String,
     description: String,
-    director: Actor,
+    director: ActorModel,
     writers: [
-        Actor
+        ActorModel
     ],
     actors: [
-        Actor
+        ActorModel
     ],
     ratings: [
-        Rating
+        RatingModel
     ]
 });
 
