@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Movie = require('../model/movie.js');
 const jwt = require("jsonwebtoken");
+const express = require('express');
 
 //adding single movie
 const addMovie = async (req, res, next) => {
@@ -25,6 +26,29 @@ const getMovies = async (req, res, next) => {
             res.send({ 'error': err });
         }
     });
-}
+};
 
-module.exports = { addMovie, getMovies }
+const setRating = async (req, res, next) => {
+    // user_email: String,
+    // rating_point: String
+    const { movie_id } = req.params;
+    const { user_email, rating_point } = req.body;
+
+    // const oldRating = await Movie.findOne({ $and: [{ _id: movie_id }, { 'ratings.$.user_email': user_email }] });
+
+    // console.log("old rating " + oldRating);
+
+    // console.log('end');
+
+    const updateDocument = {
+        //$push: {"ratings":{ "user_email": user_email, "rating_point": rating_point }}
+        $push: { "ratings": req.body }
+    }
+
+    await Movie.updateOne({ _id: movie_id }, updateDocument);
+
+    res.send({ 'status': true, 'message': 'rating added successfully!' });
+
+};
+
+module.exports = { addMovie, getMovies, setRating }

@@ -7,37 +7,37 @@ const Rating = mongoose.model('Rating');
 
 //create schema
 const movieSchema = new mongoose.Schema({
-    title: String,
+    title: { type: String, required: true },
     release_date: Date,
-    length: String,
-    description: String,
-    image: String,
+    length: { type: String, required: true },
+    description: { type: String, required: true },
+    image: { type: String, required: true },
     director: {
-        name: String,
+        name: { type: String, required: true },
         born_date: Date,
-        born_place: String,
-        contact: String
+        born_place: { type: String, required: true },
+        contact: { type: String }
     },
     writers: [
         {
-            name: String,
+            name: { type: String, required: true },
             born_date: Date,
-            born_place: String,
-            contact: String
+            born_place: { type: String, required: true },
+            contact: { type: String }
         }
     ],
     actors: [
         {
-            name: String,
+            name: { type: String, required: true },
             born_date: Date,
-            born_place: String,
-            contact: String
+            born_place: { type: String, required: true },
+            contact: { type: String }
         }
     ],
     ratings: [
         {
-            user_email: String,
-            rating_point: String
+            user_email: { type: String, unique: true, required: true },
+            rating_point: { type: Number, required: true }
         }
     ]
 });

@@ -6,6 +6,7 @@ const router = express.Router();
 //movie
 router.post('/', validateToken.checkToken, movieController.addMovie);
 router.get('/', movieController.getMovies);
+router.put('/rating/:movie_id', validateToken.checkToken, movieController.setRating);
 
 
 

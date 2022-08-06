@@ -9,7 +9,11 @@ const userRouter = require('./routers/userRouter.js');
 const app = express();
 
 // connect to a MongoDB database
-mongoose.connect('mongodb://0.0.0.0:27017/movie', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://0.0.0.0:27017/movie').then(function () {
+    console.log('connect successfully!');
+}).catch(function (err) {
+    console.log(`problem with db, `, err);
+});
 
 app.disable('x-powered-by');
 
@@ -31,3 +35,4 @@ const PORT_NUMBER = 8899;
 app.listen(PORT_NUMBER, function () {
     console.log(`listening to post number ${PORT_NUMBER}`);
 })
+
