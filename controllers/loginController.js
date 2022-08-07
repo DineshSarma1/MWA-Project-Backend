@@ -4,19 +4,24 @@ const bcrypt = require('bcryptjs');
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
-    const userDB = await userModel.findOne({ email });
-    var passwordIsValid = bcrypt.compareSync(password, userDB.password);
-    console.log(passwordIsValid);
-    if (passwordIsValid) {
-        // sign a token
-        const token = jwt.sign({
-            user_id: userDB._id,
-            fullname: userDB.name,
-            email: userDB.email
-        }, `SECRET`);
-        res.status(200).json({ token })
+    try {
+        const userDB = await userModel.findOne({ email });
+        var passwordIsValid = bcrypt.compareSync(password, userDB.password);
+        console.log(passwordIsValid);
+        if (passwordIsValid) {
+            // sign a token
+            const token = jwt.sign({
+                user_id: userDB._id,
+                fullname: userDB.name,
+                email: userDB.email
+            }, `SECRET`);
+            res.status(200).json({ token })
+        }
+        res.json({ error: `user does not exist` });
+    } catch (err) {
+        res.json({ error: `failed to login!` });
+        console.log('error on login : ' + err);
     }
-    res.json({ error: `user does not exist` });
 
 };
 
