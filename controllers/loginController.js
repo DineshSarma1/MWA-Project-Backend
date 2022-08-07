@@ -8,7 +8,7 @@ const login = async (req, res, next) => {
   if (userDB == null) {
     res.json({
       payload: null,
-      message: `user does not exist`,
+      message: `Please enter valid username and password!`,
       success: false,
     });
   } else {
@@ -26,14 +26,14 @@ const login = async (req, res, next) => {
       );
       res.status(200).json({
         payload: token,
-        message: `user does not exist`,
+        message: `Please enter valid username and password!`,
         success: false,
       });
     }
   }
   res.json({
     payload: null,
-    message: `user does not exist`,
+    message: `Please enter valid username and password!`,
     success: false,
   });
 };
