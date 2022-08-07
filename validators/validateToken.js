@@ -7,14 +7,18 @@ const checkToken = async (req, res, next) => {
             res.json({ auth: false, message: 'No token provided.' })
             return next({ auth: false, message: 'No token provided.' });
         }
-        jwt.verify(token, "SECRET", function (err, decoded) {
-            if (err) {
-                res.json({ auth: false, message: 'Failed to authenticate token.' });
-                return next({ auth: false, message: 'Failed to authenticate token.' });
-            }
-            req.user = decoded;
-            return next();
-        });
+        try {
+            jwt.verify(token, "SECRET", function (err, decoded) {
+                if (err) {
+                    res.json({ auth: false, message: 'Failed to authenticate token.' });
+                    return next({ auth: false, message: 'Failed to authenticate token.' });
+                }
+                req.user = decoded;
+                return next();
+            });
+        } catch (err) {
+            return next({ auth: false, message: 'No token provided.' });
+        }
 
     } else {
         res.json({ 'message': 'No token provided.' });

@@ -38,7 +38,7 @@ const movieSchema = new mongoose.Schema({
     ],
     ratings: [
         {
-            user_email: { type: String, unique: true, required: true },
+            user_email: { type: String, required: true },
             rating_point: { type: Number, required: true }
         }
     ]

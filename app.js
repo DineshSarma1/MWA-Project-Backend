@@ -8,12 +8,19 @@ const movieRouter = require('./routers/movieRouter');
 const userRouter = require('./routers/userRouter.js');
 const app = express();
 
+//configuring environment file
+const dotenv = require('dotenv');
+dotenv.config();
+const MONGO_URL = process.env.MONGO_URL;
+
 // connect to a MongoDB database
-mongoose.connect('mongodb://0.0.0.0:27017/movie').then(function () {
+//mongodb://0.0.0.0:27017/movie
+mongoose.connect(MONGO_URL).then(function () {
     console.log('connect successfully!');
 }).catch(function (err) {
     console.log(`problem with db, `, err);
 });
+
 
 app.disable('x-powered-by');
 
