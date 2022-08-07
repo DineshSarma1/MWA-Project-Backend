@@ -51,4 +51,17 @@ const setRating = async (req, res, next) => {
 
 };
 
-module.exports = { addMovie, getMovies, setRating }
+const filterMovie = async (req, res, next) => {
+
+    const { movie_type } = req.params;
+
+    const movies = await Movie.find({ 'movie_type': movie_type });
+    console.log(movies.length);
+    if (movies.length != 0) {
+        res.send({ 'status': true, 'movies': movies });
+    } else {
+        res.send({ 'status': false, 'message': 'unable to find movie!' });
+    }
+};
+
+module.exports = { addMovie, getMovies, setRating, filterMovie }

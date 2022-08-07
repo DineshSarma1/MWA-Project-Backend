@@ -13,6 +13,7 @@ const movieSchema = new mongoose.Schema({
     description: { type: String, required: true },
     image: { type: String, required: true },
     video: { type: String, required: true },
+    movie_type: [String],
     director: {
         name: { type: String, required: true },
         born_date: Date,
