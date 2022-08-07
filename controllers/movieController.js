@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Movie = require('../model/movie.js');
 const jwt = require("jsonwebtoken");
 const express = require('express');
+const movie = require('../model/movie.js');
 
 //adding single movie
 const addMovie = async (req, res, next) => {
@@ -34,20 +35,43 @@ const setRating = async (req, res, next) => {
     const { movie_id } = req.params;
     const { user_email, rating_point } = req.body;
 
-    // const oldRating = await Movie.findOne({ $and: [{ _id: movie_id }, { 'ratings.$.user_email': user_email }] });
+    Movie.findOne({ _id: movie_id }, async (err, movie) => {
+        try {
 
-    // console.log("old rating " + oldRating);
+            console.log(`movie found on rating : ${movie}`);
+
+            const oldRating = movie.ratings.filter(rating => rating.user_email === user_email);
+            console.log(`old rating ${oldRating}`);
+
+            if (oldRating.length === 0) {
+                const updateDocument = {
+                    //$push: {"ratings":{ "user_email": user_email, "rating_point": rating_point }}
+                    $push: { "ratings": req.body }
+                }
+
+                await Movie.updateOne({ _id: movie_id }, updateDocument);
+
+                res.send({ 'status': true, 'message': 'rating added successfully!' });
+
+            } else {
+                res.send({ 'status': false, 'message': 'You have alread provided the rating' });
+            }
+
+        } catch (err) {
+            console.log(`error while filtering ${err}`);
+        }
+    });
+
+    //const oldEmail = movie.ratings.filter(rating => rating.user_email === user_email);
+
+
+    //console.log(`old rating ${oldRating}`);
 
     // console.log('end');
 
-    const updateDocument = {
-        //$push: {"ratings":{ "user_email": user_email, "rating_point": rating_point }}
-        $push: { "ratings": req.body }
-    }
 
-    await Movie.updateOne({ _id: movie_id }, updateDocument);
 
-    res.send({ 'status': true, 'message': 'rating added successfully!' });
+
 
 };
 
