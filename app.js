@@ -15,7 +15,7 @@ const MONGO_URL = process.env.MONGO_URL;
 
 // connect to a MongoDB database
 //mongodb://0.0.0.0:27017/movie
-mongoose.connect(MONGO_URL).then(function () {
+mongoose.connect('mongodb://0.0.0.0:27017/movie').then(function () {
     console.log('connect successfully!');
 }).catch(function (err) {
     console.log(`problem with db, `, err);
