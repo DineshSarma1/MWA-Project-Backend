@@ -1,3 +1,11 @@
-const express = require('express');
+const express = require("express");
+const movieController = require("../controllers/movieController.js");
+const validateToken = require("../validators/validateToken.js");
+const router = express.Router();
 
-const movieController = require('../controllers/movieController');
+//movie
+router.post("/", validateToken.checkToken, movieController.addMovie);
+router.get("/", movieController.getMovies);
+router.get("/:id", movieController.getMoviesById);
+
+module.exports = router;

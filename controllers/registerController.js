@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
 const User = require('../model/User.js');
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
 
 //adding single user
 const createUser = async (req, res, next) => {
 
+    const hashedPassword = bcrypt.hashSync(req.body.password, 8);
     const user = await User.create({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        password: hashedPassword,
         authType: req.body.authType,
         dob: req.body.dob,
         interests: req.body.interests
