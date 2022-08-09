@@ -7,6 +7,8 @@ const movie = require('../model/movie.js');
 //adding single movie
 const addMovie = async (req, res, next) => {
 
+    //const { image } = req.body.image;
+
     const movie = await Movie.create(req.body);
 
     if (movie === null) {
@@ -51,27 +53,16 @@ const setRating = async (req, res, next) => {
 
                 await Movie.updateOne({ _id: movie_id }, updateDocument);
 
-                res.send({ 'status': true, 'message': 'rating added successfully!' });
+                res.send({ 'payload': oldRating, 'status': true, 'message': 'rating added successfully!' });
 
             } else {
-                res.send({ 'status': false, 'message': 'You have alread provided the rating' });
+                res.send({ 'payload': null, 'status': false, 'message': 'You have alread provided the rating' });
             }
 
         } catch (err) {
             console.log(`error while filtering ${err}`);
         }
     });
-
-    //const oldEmail = movie.ratings.filter(rating => rating.user_email === user_email);
-
-
-    //console.log(`old rating ${oldRating}`);
-
-    // console.log('end');
-
-
-
-
 
 };
 
@@ -82,9 +73,9 @@ const filterMovie = async (req, res, next) => {
     const movies = await Movie.find({ 'movie_type': movie_type });
 
     if (movies.length != 0) {
-        res.send({ 'status': true, 'movies': movies });
+        res.send({ 'payload': movies, 'status': true, 'movies': movies });
     } else {
-        res.send({ 'status': false, 'message': 'unable to find movie!' });
+        res.send({ 'payload': null, 'status': false, 'message': 'unable to find movie!' });
     }
 };
 
