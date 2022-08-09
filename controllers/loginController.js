@@ -16,9 +16,15 @@ const login = async (req, res, next) => {
         },
         `SECRET`
       );
+      let loginData = {
+        token: token,
+        user_id: userDB._id,
+        fullname: userDB.name,
+        email: userDB.email,
+      };
       res
         .status(200)
-        .json({ payload: token, message: "Login Success", success: true });
+        .json({ payload: loginData, message: "Login Success", success: true });
     }
     res.json({
       payload: token,
