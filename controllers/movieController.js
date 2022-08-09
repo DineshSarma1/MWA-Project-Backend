@@ -6,6 +6,7 @@ const movie = require("../model/movie.js");
 
 //adding single movie
 const addMovie = async (req, res, next) => {
+
   const movie = await Movie.create(req.body);
   if (movie === null) {
     res.send({
@@ -16,6 +17,7 @@ const addMovie = async (req, res, next) => {
   } else {
     res.send({ payload: movie, message: "Movie Added!", success: true });
   }
+>
 };
 
 //returns list of movies - no need of token
@@ -84,6 +86,7 @@ const filterMovie = async (req, res, next) => {
       message: "unable to find movie!",
     });
   }
+
 };
 
 module.exports = { addMovie, getMovies, setRating, filterMovie };
