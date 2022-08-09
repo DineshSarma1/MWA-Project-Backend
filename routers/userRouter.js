@@ -9,7 +9,6 @@ const router = express.Router();
 //user
 router.post(
   "/register",
-  registerValidator.validateRegistration,
   registerController.createUser
 );
 router.post("/login", registerValidator.validateLogin, loginController.login);

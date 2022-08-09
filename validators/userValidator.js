@@ -20,11 +20,11 @@ const validateRegistration = async (req, res, next) => {
     const email = req.body.email;
     const userDB = await userModel.findOne({ email });
 
-    if (userDB == null) {
+    if (userDB === null) {
         return next();
-    } else {
-        res.send({ 'message': `user with email ${email} is already exist!` });
     }
+    return next();
+    //res.status(200).json({ 'message': `user with email ${email} is already exist!` });
 }
 
 const validateLogin = async (req, res, next) => {
