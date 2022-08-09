@@ -3,11 +3,19 @@ const Movie = require('../model/movie.js');
 const jwt = require("jsonwebtoken");
 const express = require('express');
 const movie = require('../model/movie.js');
+const fs = require('fs');
+const multer = require('multer');
+const util = require("util");
+const { uploadFile } = require("./uploadFileController");
+const unlinkFile = util.promisify(fs.unlink);
+// const AWS = require('aws-sdk');
+// const s3 = new AWS.S3({
+//     accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+// });
 
 //adding single movie
 const addMovie = async (req, res, next) => {
-
-    //const { image } = req.body.image;
 
     const movie = await Movie.create(req.body);
 
@@ -18,6 +26,25 @@ const addMovie = async (req, res, next) => {
     }
 
 };
+
+const uploadImage = async (req, res, next) => {
+
+    console.log(req.files);
+    //console.log(req.file.path);
+
+    // const imagePath = req.file;
+    // const blob = fs.readFileSync(imagePath);
+
+    // const uploadedImage = await s3.upload({
+    //     Bucket: process.env.AWS_S3_BUCKET_NAME,
+    //     Key: req.files[0].originalFilename,
+    //     Body: blob,
+    // }).promise();
+
+
+    // console.log(`image path from aws ${uploadedImage.Location}`);
+    // res.send({ 'status': true, 'image_url': uploadedImage.Location })
+}
 
 //returns list of movies - no need of token
 const getMovies = async (req, res, next) => {
@@ -79,4 +106,4 @@ const filterMovie = async (req, res, next) => {
     }
 };
 
-module.exports = { addMovie, getMovies, setRating, filterMovie }
+module.exports = { addMovie, getMovies, setRating, filterMovie, uploadImage }
