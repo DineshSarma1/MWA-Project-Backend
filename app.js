@@ -3,9 +3,9 @@ const fs = require("fs");
 const path = require("path");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
-const movieRouter = require('./routers/movieRouter');
-const userRouter = require('./routers/userRouter.js');
+const mongoose = require("mongoose");
+const movieRouter = require("./routers/movieRouter");
+const userRouter = require("./routers/userRouter.js");
 const app = express();
 const cors = require('cors');
 
@@ -26,14 +26,15 @@ mongoose.connect(MONGO_URL).then(function () {
 app.disable('x-powered-by');
 app.use(cors());
 
+app.disable("x-powered-by");
 
 //used for post method
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cors());
 //router
-app.use('/movie', movieRouter);
-app.use('/user', userRouter);
+app.use("/movie", movieRouter);
+app.use("/user", userRouter);
 
 /// log all requests to access.log
 app.use(
@@ -47,7 +48,5 @@ app.use(
 //listening to port
 const PORT_NUMBER = 8899;
 app.listen(PORT_NUMBER, function () {
-
     console.log(`listening to post number ${PORT_NUMBER}`);
 });
-
