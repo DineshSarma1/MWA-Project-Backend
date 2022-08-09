@@ -16,17 +16,24 @@ const login = async (req, res, next) => {
         },
         `SECRET`
       );
-      res
-        .status(200)
-        .json({ payload: token, message: "Login Success", success: true });
+      let loginData = {
+        token: token,
+        user_id: userDB._id,
+        fullname: userDB.name,
+        email: userDB.email,
+      };
+      res.json({ payload: loginData, message: "Login Success", success: true });
+      return;
     }
     res.json({
-      payload: token,
+      payload: null,
       message: `user does not exist`,
       success: false,
     });
+    return;
   } catch (err) {
-    res.json({ payload: token, message: `failed to login!`, success: false });
+    res.json({ payload: null, message: `failed to login!`, success: false });
+    return;
   }
 };
 
