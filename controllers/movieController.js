@@ -75,10 +75,10 @@ const filterMovie = async (req, res, next) => {
   const { movie_type } = req.params;
   const movies = await Movie.find({ movie_type: movie_type });
   if (movies.length != 0) {
-    res.send({ payload: null, success: true, message: "Movie Found!" });
+    res.send({ payload: movies, success: true, message: "Movie Found!" });
   } else {
     res.send({
-      payload: movies,
+      payload: null,
       success: false,
       message: "unable to find movie!",
     });
